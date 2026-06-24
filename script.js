@@ -27,15 +27,18 @@ function create2DArray(rows, cols, fill) {
 const GameBoard = ( () => {
 
     let board = create2DArray(3, 3, "");
-    
+
+    const magicSquare = [
+        [2,7,6],
+        [9,5,1],
+        [4,3,8]
+    ]
+
     // Function that returns the gameBoard status
     const getBoard = () => board
+    const getMagic = () => magicSquare;
 
-    // const changeBoard = ([i, j], value, owner) => {
-    //     board[i][j] = {value: value, owner: owner};
-    // }
-
-    return {getBoard};
+    return {getBoard, getMagic};
 } ) ()
 
 
@@ -51,21 +54,35 @@ const GameController = ( () => {
         }
     }
 
-    function playRound([i,j], player, board) {
+    function playRound([i,j], player, board, magicBoard) {
         try { 
             changeBoard([i,j], player.getCheck(), board);
-            console.log(`${player.getName()} has played at ${[i,j]} with ${player.getCheck()}`)
+            let magicValue = magicBoard[i][j];
+            player.magicSum(magicValue);
+        
+            console.log(`${player.getName()} has played at ${[i,j]} with ${player.getCheck()}`);
             console.table(board);
+            checkWinner(player)
         } catch (e) {
             console.log(e)
         }
     }
 
-    return {changeBoard, playRound};
+    function checkWinner(player) {
+        // console.log("Checking winner")
+        if (player.getSum() == 15) {
+            player.incrementScore();
+            console.log(`${player.getName()}: Wins!`)
+            console.log(`Score: ${player.getScore()}`)
+        }
+    }
+
+    return {changeBoard, playRound, checkWinner};
 })()
 
 const Player = (name, checkType) => {
     let score = 0;
+    let sum = 0;
 
     // Map the checks to either Cross or Circle
     if (checkType.toLowerCase() === "cross") {
@@ -82,12 +99,27 @@ const Player = (name, checkType) => {
         console.log(`Player: ${name} | Check: ${checkType} | Score: ${score}`);
     }
     const getScore = () => score;
+    const getSum = () => sum;
     const incrementScore = () => score++;
+    const magicSum = (magicValue) => sum += magicValue;
 
-    return {getName, getCheck, getInfo, getScore, incrementScore};
+    return {
+        getName, 
+        getCheck, 
+        getInfo, 
+        getScore,
+        incrementScore, 
+        magicSum, 
+        getSum
+    };
 }
 
 let player1 = Player("Mari", "Cross");
 let player2 = Player("John", "Circle")
+let board = GameBoard.getBoard();
+const magicBoard = GameBoard.getMagic();
 
-GameController.playRound([0,0], player2, GameBoard.getBoard())
+GameController.playRound([0,0], player2, board, magicBoard);
+GameController.playRound([1,0], player2, board, magicBoard);
+GameController.playRound([2,0], player2, board, magicBoard);
+
