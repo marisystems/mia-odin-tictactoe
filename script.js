@@ -1,6 +1,10 @@
-// So, my objective here is to be able to make a fully
-// Functional tic-tac-toe game first in the console
-// And only after that worry about html&css
+let grid = document.querySelector(".grid")
+
+grid.addEventListener("click", (element) => {
+    if (element.target.classList == "cell") {
+        let cell = element.target;
+    }
+})
 
 function create2DArray(rows, cols, fill) {
     // Helper function to create the gameboard
@@ -14,8 +18,6 @@ function create2DArray(rows, cols, fill) {
     }
     return myArray
 }
-
-
 
 // Make an IIFE for GameBoard since we'll only declare it once
 const GameBoard = ( () => {
@@ -151,19 +153,6 @@ const Player = (name, checkType) => {
     };
 }
 
-let player1 = Player("Mari", "Cross");
-let player2 = Player("John", "Circle")
+let player = Player("player", "Cross");
+let computer = Player("computer", "Circle")
 let board = GameBoard.getBoard();
-
-GameController.playRound([0,0], player2, board);
-
-GameController.playRound([2,2], player1, board);
-
-GameController.playRound([1,0], player2, board);
-
-GameController.playRound([2,0], player1, board);
-
-GameController.playRound([0,1], player2, board);
-
-GameController.playRound([2,1], player1, board);
-

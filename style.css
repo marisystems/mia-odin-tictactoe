@@ -1,9 +1,99 @@
+:root {
+    --main-color: #332956;
+    --secondary-color: #c7ccd9;
+    --font-color: #eee;
+    --cell-color: #c0c0ea;
+    --cell-hover: #eee;
+    --options-color: #bfc1da;
+    --options-hover: #eee;
+
+    --font-size: 16px;
+}
+
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
 body {
-    margin: 10px;
-    background: #ddf1d5;
+    width: 100vw;
+    height: 100vh;
+    background: var(--secondary-color);
+    padding: 50px;
+    font-size: var(--font-size);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    color: var(--font-color);
+    margin-bottom: 20px;
+    background: var(--main-color);
+    padding: 5px 30px;
+    border-radius: 10px;
+    letter-spacing: 0.5rem;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.cell {
+    width: 100px;
+    height: 100px;
+    background: var(--cell-color);
+}
+
+.cell:hover {
+    background: var(--cell-hover);
+}
+
+.status {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    margin: 20px 0px 30px;
+}
+
+.options {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.options button {
+    width: 50px;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    background: var(--options-color);
+}
+
+.options button:hover {
+    background: var(--options-hover);
+}
+
+.wrapper {
+    color: var(--font-color);
+    background: var(--main-color);
+    padding: 20px 50px;
+    border-radius: 10px;;
+}
+
+.message,
+.score {
+    font-weight: bold;
 }
